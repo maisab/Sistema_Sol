@@ -1,8 +1,9 @@
-<%-- 
-    Document   : download
-    Created on : 30/06/2016, 20:19:44
-    Author     : maa
---%>
+
+<%
+    if (session.getAttribute("isLogado") == null) {
+        response.sendRedirect("login.jsp");
+    }
+%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

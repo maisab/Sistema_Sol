@@ -47,12 +47,14 @@ public class LoginServlet extends HttpServlet {
         String op = request.getParameter("op");
 
         if (op.equals("cad")) {
+
             HttpSession session = request.getSession(false);
             response.sendRedirect("cadastro.jsp");
             return;
 
         } else if (op.equals("download")) {
-            HttpSession session = request.getSession(false);
+            HttpSession session = request.getSession(true);
+            session.setAttribute("isLogado", true);
             response.sendRedirect("download.jsp");
             return;
 
