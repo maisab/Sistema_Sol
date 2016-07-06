@@ -11,17 +11,17 @@ body {
     margin: 30px auto;
 }
 
-.login-block {
-    width: 320px;
+.cadastro-block {
+    margin-top: 150px;
+    width: 420px;
     padding: 20px;
-    /*background: #fff;*/
     background: #F0F8D0;
     border-radius: 5px;
     border-top: 5px solid #228B22;
     margin: 0 auto;
 }
 
-.login-block h1 {
+.cadastro-block h1 {
     text-align: center;
     color: #000;
     font-size: 18px;
@@ -30,7 +30,7 @@ body {
     margin-bottom: 20px;
 }
 
-.login-block input {
+.cadastro-block input {
     width: 100%;
     height: 42px;
     box-sizing: border-box;
@@ -43,31 +43,51 @@ body {
     outline: none;
 }
 
-.login-block input#username {
+.cadastro-block input#username {
     background: #fff url('http://i.imgur.com/u0XmBmv.png') 20px top no-repeat;
     background-size: 16px 80px;
 }
 
-.login-block input#username:focus {
+.cadastro-block input#username:focus {
     background: #fff url('http://i.imgur.com/u0XmBmv.png') 20px bottom no-repeat;
     background-size: 16px 80px;
 }
 
-.login-block input#password {
+.cadastro-block input#password {
     background: #fff url('http://i.imgur.com/Qf83FTt.png') 20px top no-repeat;
     background-size: 16px 80px;
 }
 
-.login-block input#password:focus {
+.cadastro-block input#password:focus {
     background: #fff url('http://i.imgur.com/Qf83FTt.png') 20px bottom no-repeat;
     background-size: 16px 80px;
 }
 
-.login-block input:active, .login-block input:focus {
+.cadastro-block input#passwordC {
+    background: #fff url('http://i.imgur.com/Qf83FTt.png') 20px top no-repeat;
+    background-size: 16px 80px;
+}
+
+.cadastro-block input#passwordC:focus {
+    background: #fff url('http://i.imgur.com/Qf83FTt.png') 20px bottom no-repeat;
+    background-size: 16px 80px;
+}
+
+.cadastro-block input#useremail {
+    background: #fff url('http://i.imgur.com/u0XmBmv.png') 20px top no-repeat;
+    background-size: 16px 80px;
+}
+
+.cadastro-block input#useremail:focus {
+    background: #fff url('http://i.imgur.com/u0XmBmv.png') 20px bottom no-repeat;
+    background-size: 16px 80px;
+}
+
+.cadastro-block input:active, .login-block input:focus {
     border: 1px solid #008000;
 }
 
-.login-block input[type=submit] {
+.cadastro-block input[type=submit] {
     width: 100%;
     height: 40px;
     background: #228B22;
@@ -82,8 +102,15 @@ body {
     outline: none;
     cursor: pointer;
 }
+.cadastro-block p{
+    margin-top: 30px;
+    text-align: center;
+    font-size: 16px;
+    font-family: Montserrat;
 
-.login-block input[type=submit]:hover {
+}
+
+.cadastro-block input[type=submit]:hover {
     background: #B0FF30;
 }
 
