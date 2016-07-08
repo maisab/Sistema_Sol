@@ -1,14 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package servlets;
 
+import dao.DAO;
+import java.io.BufferedInputStream;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,94 +23,85 @@ import javax.servlet.http.HttpSession;
  *
  * @author maa
  */
-@WebServlet(name = "DownloadServlet", urlPatterns = {"/DownloadServlet"})
 public class DownloadServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet DownloadServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet DownloadServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-
-        System.out.println("entrou aqui ");
 
         String op = request.getParameter("op");
-        if (op.equals("download")) {
-            response.sendRedirect("download.jsp");
-            return;
+        HttpSession session = request.getSession();
 
+        if (op.equals("Download")) {
+            String dataInicial = request.getParameter("data_inicial"); //nome do campo no formulario
+            String dataFinal = request.getParameter("data_final"); //nome do campo no formulario            
+            int sensor = Integer.parseInt(request.getParameter("sensor"));
+
+            String dtInicial = dataInicial.split(" ")[0];
+            String hrInicial = dataInicial.split(" ")[1].substring(0, 8);
+
+            String dtFinal = dataFinal.split(" ")[0];
+            String hrFinal = dataFinal.split(" ")[1].substring(0, 8);
+
+            try {
+                if (DAO.buscaSensor(dtInicial, hrInicial, dtFinal, hrFinal, sensor).isEmpty()) {
+                    session.setAttribute("isLogado", true);
+                    session.setAttribute("listaDownloadVazia", true);
+                    response.sendRedirect("download.jsp");
+
+                } else {
+                    session.setAttribute("isLogado", true);
+                    session.setAttribute("listaDownloadVazia", false);
+                    List<String> lista = DAO.buscaSensor(dtInicial, hrInicial, dtFinal, hrFinal, sensor);
+                    File arquivo = new File("arquivo.csv");
+                    FileWriter fw = new FileWriter(arquivo);
+                    BufferedWriter bw = new BufferedWriter(fw);
+
+                    bw.write("datahora_coleta_dados;sensor_id_sensor;dados_coleta_dados");
+                    bw.newLine();
+
+                    for (String linha : lista) {
+                        bw.write(linha);
+                        bw.newLine();
+                    }
+                    bw.close();
+                    fw.close();
+
+                    //tipo de arquivo
+                    response.setContentType("application/csv");
+                    //nome do arquivo a ser exibido na caixa de download
+                    response.setHeader("Content-Disposition", "attachment; filename=arquivo.csv;");
+                    //manda os bytes do arquivo pelo response
+                    URL url = arquivo.toURI().toURL();
+                    BufferedInputStream leitor = new BufferedInputStream(url.openStream(), 4 * 1024);
+                    OutputStream escritor = response.getOutputStream();
+                    byte[] buffer = new byte[4 * 1024];
+                    int size = 0;
+                    while ((size = leitor.read(buffer, 0, buffer.length)) != -1) {
+                        escritor.write(buffer, 0, size);
+                    }
+                    escritor.close();
+                    leitor.close();
+                    
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InstantiationException ex) {
+                Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-
-        String op = request.getParameter("op");
-        HttpSession session = request.getSession(false);
-
-        System.out.println("ENTROOOOOOOOOUUUUUUUUU SERVLET DOWNLOAD");
-        System.out.println(request.getParameter("op"));
-
-        String dataInicial = request.getParameter("data_inicial"); //nome do campo no formulario
-        String horaInicial = request.getParameter("hora_inicial");
-        String dataFinal = request.getParameter("data_final"); //nome do campo no formulario
-        String horaFinal = request.getParameter("hora_final");
-        int sensor = Integer.parseInt(request.getParameter("sensor"));
-
-        System.out.println("DATA INICIAL" + dataInicial);
 
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";

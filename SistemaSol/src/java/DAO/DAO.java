@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dao;
 
 import java.sql.Connection;
@@ -15,18 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Usuario;
 
-/**
- *
- * @author maa
- */
 public class DAO {
 
     /*------------remoto-----------------*/
-//        private static final String url = "jdbc:mysql://mysql.sol.pro.br/";
-//        private static final String dbName = "sol04";
-//        private static final String driver = "com.mysql.jdbc.Driver";
-//        private static final String userName = "sol04";
-//        private static final String password = "546987";
+//    private static final String url = "jdbc:mysql://mysql.sol.pro.br/";
+//    private static final String dbName = "sol01";
+//    private static final String driver = "com.mysql.jdbc.Driver";
+//    private static final String userName = "sol01";
+//    private static final String password = "lageado";
     private static final String url = "jdbc:mysql://localhost:3306/";
     private static final String dbName = "loginTeste";
     private static final String driver = "com.mysql.jdbc.Driver";
@@ -43,8 +34,6 @@ public class DAO {
             Class.forName(driver).newInstance();
             conexao = DriverManager.getConnection(url + dbName, userName, password);
 
-//            pst = conexao.prepareStatement("select * from  login where nome=? and senha=?"); /*remoto*/
-//            pst = conexao.prepareStatement("select * from  login where usuario=? and senha=?");
             pst = conexao.prepareStatement("select email_usuario, senha_usuario from  usuario where email_usuario=? and senha_usuario=?");
             pst.setString(1, name);
             pst.setString(2, pass);
@@ -80,7 +69,6 @@ public class DAO {
                 }
             }
         }
-
         return status;
     }
 
@@ -103,9 +91,7 @@ public class DAO {
                 System.out.println("Executando consulta: " + sql);
 
                 statement.execute(sql);
-
                 System.out.println("Inserido com sucesso");
-
                 statement.close();
             }
             return true;
@@ -122,14 +108,6 @@ public class DAO {
         PreparedStatement pst = null;
         ResultSet rs = null;
         List<String> listaResultado = new ArrayList<>();
-//
-//        System.out.println("--------SQL ---------");
-//
-//        System.out.println(dataInicio);
-//        System.out.println(horaInicio);
-//        System.out.println(dataFim);
-//        System.out.println(horaFim);
-//        System.out.println(sensor);
 
         Class.forName(driver).newInstance();
         conexao = DriverManager.getConnection(url + dbName, userName, password);
@@ -140,14 +118,10 @@ public class DAO {
                 + "                                             AND sensor_id_sensor = " + "'" + sensor + "'");
 
         rs = pst.executeQuery();
-        
+
         String aux = "";
-        
+
         while (rs.next()) {
-//            System.out.println("--------- entrou aquiiiiiiiiiiiiiii -----------");  
-//            
-//            System.out.println(" SENSOR " +  rs.getInt("sensor_id_sensor"));
-//            
             aux += rs.getTimestamp("datahora_coleta_dados");
             aux += ";" + rs.getInt("sensor_id_sensor");
             aux += ";" + rs.getString("dados_coleta_dados");
@@ -155,23 +129,36 @@ public class DAO {
             listaResultado.add(aux);
             aux = "";
         }
-//            System.out.println("----------- saiu aquiiiiiiiiiiiiiii ----------------");
-        
         return listaResultado;
     }
 
-    public static ArrayList<Usuario> listAll() {
-
+    public static List<String> listaDatas() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
         Connection conexao = null;
         PreparedStatement pst = null;
+        ResultSet rs = null;
+        List<String> listaResultado = new ArrayList<>();
 
+        Class.forName(driver).newInstance();
+        conexao = DriverManager.getConnection(url + dbName, userName, password);
+
+        pst = conexao.prepareStatement("select datahora_coleta_dados from coleta_dados");
+        rs = pst.executeQuery();
+
+        while (rs.next()) {
+            listaResultado.add(String.valueOf(rs.getTimestamp("datahora_coleta_dados")));
+        }
+        return listaResultado;
+
+    }
+
+    public static ArrayList<Usuario> listAll() {
+        Connection conexao = null;
+        PreparedStatement pst = null;
         ArrayList<Usuario> usuarios = new ArrayList<>();
 
         try {
-
             Class.forName(driver).newInstance();
             conexao = DriverManager.getConnection(url + dbName, userName, password);
-
             PreparedStatement stmt = conexao.prepareStatement("select * from usuario");
 
 // executa um select
@@ -186,16 +173,12 @@ public class DAO {
 
                 System.out.println(u.toString());
                 usuarios.add(u);
-
             }
-
             stmt.close();
             conexao.close();
 
         } catch (Exception ex) {
-
             System.out.println("Erro : " + ex.getMessage());
-
         }
         return usuarios;
     }

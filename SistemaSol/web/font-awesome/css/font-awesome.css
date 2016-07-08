@@ -364,7 +364,8 @@
 }
 .fa-edit:before,
 .fa-pencil-square-o:before {
-  content: "\f044";
+  /*content: "\f044";*/
+  content: url(../imagens/downloadIcon.png);
 }
 .fa-share-square-o:before {
   content: "\f045";

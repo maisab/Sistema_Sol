@@ -81,6 +81,7 @@ body {
     font-family: Montserrat;
     outline: none;
     cursor: pointer;
+    text-align: center;
 }
 
 .login-block input[type=submit]:hover {

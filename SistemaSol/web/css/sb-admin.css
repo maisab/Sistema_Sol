@@ -8,7 +8,7 @@
 
 body {
     margin-top: 100px;
-    background-color: #222;
+    background-color: #fff;
 }
 
 @media(min-width:768px) {
@@ -65,8 +65,8 @@ body {
 .top-nav>.open>a,
 .top-nav>.open>a:hover,
 .top-nav>.open>a:focus {
-    color: #fff;
-    background-color: #000;
+    color: #000;
+    background-color: #fff;
 }
 
 .top-nav>.open>.dropdown-menu {
@@ -122,10 +122,12 @@ ul.alert-dropdown {
         border: none;
         border-radius: 0;
         overflow-y: auto;
-        background-color: #222;
+        background-color:#228B22;
+        border-color: #006400;
         bottom: 0;
         overflow-x: hidden;
         padding-bottom: 40px;
+        
     }
 
     .side-nav>li>a {
@@ -135,7 +137,7 @@ ul.alert-dropdown {
     .side-nav li a:hover,
     .side-nav li a:focus {
         outline: none;
-        background-color: #000 !important;
+        background-color: #fff !important;
     }
 }
 
@@ -147,7 +149,7 @@ ul.alert-dropdown {
     display: block;
     padding: 10px 15px 10px 38px;
     text-decoration: none;
-    color: #999;
+    color: #003300;
 }
 
 .side-nav>li>ul>li>a:hover {
@@ -229,8 +231,8 @@ ul.alert-dropdown {
 #logo {
     margin-left: auto;
     margin-right: auto;
-    width: 200px;
-    height: 200px;
-    /*float:left;*/
-    background: url("../imagens/Logo_solProBrasil_200x200.png") 0 0 no-repeat;
+    width: 1500px;
+    height: 150px;
+    /*float: ;*/
+    background: url("../imagens/Logo_solProBrasil_150x150.png") no-repeat;
 }
