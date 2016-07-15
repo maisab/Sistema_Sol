@@ -87,8 +87,8 @@
                     <div class="row">
                         <div class="col-lg-12">
 
-                            <div id="form-download" style="margin-left: 300px; margin-top: 50px;"> 
-                                <h2>Selecione os dados para Download</h2>
+                            <div id="form-download" style="margin-left: 220px; margin-top: 50px;"> 
+                                <h2>Selecione os dados para realizar o Download</h2>
 
                                 <%
                                     if ((Boolean) session.getAttribute("listaDownloadVazia")) {
@@ -96,41 +96,38 @@
                                     }
                                 %>
 
-                                <div id="tabela" >
+                                <div id="tabela">
                                     <form action="DownloadServlet" method="GET">
-                                        <table style="margin-left: 40px; margin-top: 10px">
-                                            <tr rows>
-                                                <td  style="width: 100px; height: 45px;">
+                                        <table style="margin-top: 10px; margin-left: 15px;">
+                                            <tr>
+                                                <td  style="width: 70px; height: 45px;">
                                                     <b>Data Inicial:</b>
-                                                </td> 
-                                                <td >
-                                                    <select name="data_inicial" style="width: 250px; height: 25px;">
-                                                        <%
-                                                            List<String> datas = DAO.listaDatas();
-                                                            out.println("<option value=\"-1\"> Escolha uma data e hora inicial </option>");
-                                                            for (String data : datas) {
-                                                                String dataFormatada = data.split(" ")[0];
-                                                                dataFormatada = "Data: " + dataFormatada.split("-")[2] + "/" + dataFormatada.split("-")[1] + "/" + dataFormatada.split("-")[0] + " Hora: " + data.split(" ")[1].substring(0, 8);
-                                                                out.println("<option value=\"" + data + "\">" + dataFormatada + "</option>");
-                                                            }
-                                                        %>
-                                                    </select>
+                                                </td>
+
+                                                <td> 
+                                                    <input type="text" name="data_inicial" onkeypress="mascara(this, '##-##-####')" maxlength="10">
+                                                </td>
+
+                                                <td  style="width: 50px; height: 45px;">
+                                                    <b>Hora:</b>
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="hora_inicial" onkeypress="mascara(this, '##:##:##')" maxlength="8">
+                                                </td>
+                                            </tr>
                                             </tr>
                                             <tr>
                                                 <td  style="width: 100px; height: 45px;">
                                                     <b>Data Final:</b>
                                                 </td>
                                                 <td>
-                                                    <select name="data_final" style="width: 250px; height: 25px;">
-                                                        <%
-                                                            out.println("<option value=\"-1\"> Escolha uma data e hora final </option>");
-                                                            for (String data : datas) {
-                                                                String dataFormatada = data.split(" ")[0];
-                                                                dataFormatada = "Data: " + dataFormatada.split("-")[2] + "/" + dataFormatada.split("-")[1] + "/" + dataFormatada.split("-")[0] + " Hora: " + data.split(" ")[1].substring(0, 8);
-                                                                out.println("<option value=\"" + data + "\">" + dataFormatada + "</option>");
-                                                            }
-                                                        %>
-                                                    </select>
+                                                    <input type="text" name="data_final" onkeypress="mascara(this, '##-##-####')" maxlength="10">
+                                                </td>
+                                                <td>
+                                                    <b>Hora:</b>
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="hora_final" onkeypress="mascara(this, '##:##:##')" maxlength="8">
                                                 </td>
                                             </tr>
 
@@ -140,8 +137,7 @@
                                                 </td>
                                                 <td>
                                                     <select name="sensor" style="width: 250px; height: 25px;">
-                                                        <%
-                                                            out.println("<option value=\"-1\"> Escolha um tipo de sensor </option>");
+                                                        <%                                                            out.println("<option value=\"-1\"> Escolha um tipo de sensor </option>");
                                                             out.println("<option value=\"1\"> 1   - Sensor de Corrente </option>");
                                                             out.println("<option value=\"2\"> 2   - Sensor de Corrente </option>");
                                                             out.println("<option value=\"3\"> 3   - Sensor de Corrente </option>");
@@ -155,17 +151,12 @@
                                                             out.println("<option value=\"11\"> 11 - Sensor de Tensão </option>");
                                                         %>
                                                     </select>
-                                                    <!--<input type="text" name="sensor" onkeypress="mascara(this, '#')" maxlength="1" required/>-->
                                                 </td>
                                             </tr>
 
-                                            <tr>
-                                                <td colspan="2">
-                                                    <input type="submit" value="Download" name="op" style="width: 150px; height: 25px; margin-left: 110px; margin-top: 15px;">
-                                                    <!--<input type="reset" value="Limpar">-->
-                                                </td>
-                                            </tr>
                                         </table>
+                                        <input type="submit" value="Download" name="op" style="width: 150px; height: 25px; margin-left: 150px; margin-top: 15px;">
+                                        <input type="reset" value="Limpar" style="width: 150px; height: 25px; margin-left: 35px; margin-top: 15px;" >
                                     </form>
 
                                 </div>

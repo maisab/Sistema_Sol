@@ -41,7 +41,8 @@ public class CadastroServlet extends HttpServlet {
 
         try {
             DAO.insert(u);
-            session.setAttribute("isLogado", true);
+            session.setAttribute("isLogado", false);
+            request.setAttribute("mensagemCadastrado", "Usuário cadastrado com sucesso!");
             RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
             rd.forward(request, response);
 

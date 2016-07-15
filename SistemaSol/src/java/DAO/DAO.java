@@ -103,7 +103,7 @@ public class DAO {
 
     }
 
-    public static List<String> buscaSensor(String dataInicio, String horaInicio, String dataFim, String horaFim, int sensor) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public static List<String> buscaSensor(String dataInicio, String dataFim, int sensor) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Connection conexao = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -113,8 +113,8 @@ public class DAO {
         conexao = DriverManager.getConnection(url + dbName, userName, password);
 
         pst = conexao.prepareStatement("select * from coleta_dados where "
-                + "                                             datahora_coleta_dados >= " + "'" + dataInicio + "'" + " " + "'" + horaInicio + "' "
-                + "                                             AND datahora_coleta_dados <= " + "'" + dataFim + "'" + " " + "'" + horaFim + "' "
+                + "                                             datahora_coleta_dados >= " + "'" + dataInicio + "'"
+                + "                                             AND datahora_coleta_dados <= " + "'" + dataFim + "'"
                 + "                                             AND sensor_id_sensor = " + "'" + sensor + "'");
 
         rs = pst.executeQuery();
@@ -124,7 +124,7 @@ public class DAO {
         while (rs.next()) {
             aux += rs.getTimestamp("datahora_coleta_dados");
             aux += ";" + rs.getInt("sensor_id_sensor");
-            aux += ";" + rs.getString("dados_coleta_dados");
+            aux += ";" + rs.getString("dado_coleta_dados");
 
             listaResultado.add(aux);
             aux = "";

@@ -3,9 +3,11 @@ package servlets;
 import dao.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -54,7 +56,7 @@ public class LoginServlet extends HttpServlet {
         String op = request.getParameter("op");
         HttpSession session = request.getSession();
 
-        String n = request.getParameter("username"); //nome do campo no formulario
+        String n = request.getParameter("username");
         String p = request.getParameter("userpass");
 
         try {
@@ -64,7 +66,10 @@ public class LoginServlet extends HttpServlet {
                 response.sendRedirect("home.jsp");
 
             } else {
-                response.sendRedirect("login.jsp");
+                request.setAttribute("erroLogin", "Usuário e/ou senha incorretos!");
+                RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+                rd.forward(request, response);
+
             }
 
         } catch (SQLException ex) {
