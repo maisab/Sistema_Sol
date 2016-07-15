@@ -24,7 +24,7 @@ public class DAO {
     private static final String userName = "root";
     private static final String password = "546987";
 
-    public static boolean validate(String name, String pass) throws SQLException, ClassNotFoundException {
+    public static boolean validaUsuario(String name, String pass) throws SQLException, ClassNotFoundException {
         boolean status = false;
         Connection conexao = null;
         PreparedStatement pst = null;
@@ -72,7 +72,25 @@ public class DAO {
         return status;
     }
 
-    public static boolean insert(Usuario u) throws ClassNotFoundException, InstantiationException {
+    public static boolean buscaUsuario(String email) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
+        Connection conexao = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+
+        Class.forName(driver).newInstance();
+        conexao = DriverManager.getConnection(url + dbName, userName, password);
+        pst = conexao.prepareStatement("select email_usuario from usuario where email_usuario = " + "'" + email + "'");
+
+        rs = pst.executeQuery();
+        
+        if(rs != null){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static boolean insereUsuario(Usuario u) throws ClassNotFoundException, InstantiationException {
         Connection conexao = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -81,22 +99,15 @@ public class DAO {
         try {
             Class.forName(driver).newInstance();
             conexao = DriverManager.getConnection(url + dbName, userName, password);
+            Statement statement = conexao.createStatement();
+            String sql = "INSERT INTO usuario (nome_usuario, email_usuario, senha_usuario) VALUES ('" + u.getNome() + "','" + u.getEmail() + "','" + u.getSenha() + "')";
+            System.out.println("Executando consulta: " + sql);
 
-            if (listaUsuarios.contains(u.getEmail())) {
-                System.out.println("Usuario já cadastrado");
+            statement.execute(sql);
+            statement.close();
 
-            } else {
-                Statement statement = conexao.createStatement();
-                String sql = "INSERT INTO usuario (nome_usuario, email_usuario, senha_usuario) VALUES ('" + u.getNome() + "','" + u.getEmail() + "','" + u.getSenha() + "')";
-                System.out.println("Executando consulta: " + sql);
-
-                statement.execute(sql);
-                System.out.println("Inserido com sucesso");
-                statement.close();
-            }
             return true;
         } catch (Exception ex) {
-
             System.out.println("Erro : " + ex.getMessage());
             return false;
         }

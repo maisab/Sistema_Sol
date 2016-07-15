@@ -4,6 +4,7 @@
     Author     : maa
 --%>
 
+<%@page import="model.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -16,6 +17,7 @@
         <a href="login.jsp"><div class="logo"> </div></a>
         <div class="cadastro-block">
             <form action="CadastroServlet" id="formCadastro" method="POST">
+                <h3 style="color:red;">${erroCadastro}</h3>
                 <h1>Cadastro</h1>
                 <input type="text" value="" name="nome_usuario" placeholder="Nome Completo" id="username" required/>
                 <input type="password" value="" name="senha_usuario" placeholder="Senha" id="password" onchange="formCadastro.passwordC.pattern = this.value;" required/>

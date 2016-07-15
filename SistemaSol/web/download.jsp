@@ -87,80 +87,89 @@
                     <div class="row">
                         <div class="col-lg-12">
 
-                            <div id="form-download" style="margin-left: 220px; margin-top: 50px;"> 
-                                <h2>Selecione os dados para realizar o Download</h2>
+                            <h2 class="page-header">
+                                Download dos dados  <!--<small>Statistics Overview</small>-->
+                            </h2>
+                            <ol class="breadcrumb">
+                                <li class="active">
+                                    <i class="fa fa-download"></i> Download
+                                </li>
 
-                                <%
-                                    if ((Boolean) session.getAttribute("listaDownloadVazia")) {
-                                        out.print("<br/><b style=\"color:red\">A pesquisa não retornou dados!</b><br/><br/>");
-                                    }
-                                %>
+                            </ol>
+                                <div id="form-download" style="margin-left: 220px; margin-top: 20px;"> 
 
-                                <div id="tabela">
-                                    <form action="DownloadServlet" method="GET">
-                                        <table style="margin-top: 10px; margin-left: 15px;">
-                                            <tr>
-                                                <td  style="width: 70px; height: 45px;">
-                                                    <b>Data Inicial:</b>
-                                                </td>
+                                    <%
+                                        if ((Boolean) session.getAttribute("listaDownloadVazia")) {
+                                            out.print("<br/><b style=\"color:red\">A pesquisa não retornou dados!</b><br/><br/>");
+                                        }
+                                    %>
 
-                                                <td> 
-                                                    <input type="text" name="data_inicial" onkeypress="mascara(this, '##-##-####')" maxlength="10">
-                                                </td>
+                                    <div id="tabela">
+                                        <form action="DownloadServlet" method="GET">
+                                            <table style="margin-top: 10px; margin-left: 0px;">
+                                                <tr>
+                                                    <td  style="width: 70px; height: 45px;">
+                                                        <b>Data Inicial:</b>
+                                                    </td>
 
-                                                <td  style="width: 50px; height: 45px;">
-                                                    <b>Hora:</b>
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="hora_inicial" onkeypress="mascara(this, '##:##:##')" maxlength="8">
-                                                </td>
-                                            </tr>
-                                            </tr>
-                                            <tr>
-                                                <td  style="width: 100px; height: 45px;">
-                                                    <b>Data Final:</b>
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="data_final" onkeypress="mascara(this, '##-##-####')" maxlength="10">
-                                                </td>
-                                                <td>
-                                                    <b>Hora:</b>
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="hora_final" onkeypress="mascara(this, '##:##:##')" maxlength="8">
-                                                </td>
-                                            </tr>
+                                                    <td> 
+                                                        <input type="text" name="data_inicial" onkeypress="mascara(this, '##-##-####')" maxlength="10">
+                                                    </td>
 
-                                            <tr>
-                                                <td  style="width: 100px; height: 45px;">
-                                                    <b>Sensor:</b>
-                                                </td>
-                                                <td>
-                                                    <select name="sensor" style="width: 250px; height: 25px;">
-                                                        <%                                                            out.println("<option value=\"-1\"> Escolha um tipo de sensor </option>");
-                                                            out.println("<option value=\"1\"> 1   - Sensor de Corrente </option>");
-                                                            out.println("<option value=\"2\"> 2   - Sensor de Corrente </option>");
-                                                            out.println("<option value=\"3\"> 3   - Sensor de Corrente </option>");
-                                                            out.println("<option value=\"4\"> 4   - Sensor de Corrente </option>");
-                                                            out.println("<option value=\"5\"> 5   - Sensor de Corrente </option>");
-                                                            out.println("<option value=\"6\"> 6   - Sensor de Tensão </option>");
-                                                            out.println("<option value=\"7\"> 7   - Sensor de Tensão </option>");
-                                                            out.println("<option value=\"8\"> 8   - Sensor de Tensão </option>");
-                                                            out.println("<option value=\"9\"> 9   - Sensor de Tensão </option>");
-                                                            out.println("<option value=\"10\"> 10 - Sensor de Tensão </option>");
-                                                            out.println("<option value=\"11\"> 11 - Sensor de Tensão </option>");
-                                                        %>
-                                                    </select>
-                                                </td>
-                                            </tr>
+                                                    <td  style="width: 50px; height: 45px;">
+                                                        <b>Hora:</b>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="hora_inicial" onkeypress="mascara(this, '##:##:##')" maxlength="8">
+                                                    </td>
+                                                </tr>
+                                                </tr>
+                                                <tr>
+                                                    <td  style="width: 100px; height: 45px;">
+                                                        <b>Data Final:</b>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="data_final" onkeypress="mascara(this, '##-##-####')" maxlength="10">
+                                                    </td>
+                                                    <td>
+                                                        <b>Hora:</b>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="hora_final" onkeypress="mascara(this, '##:##:##')" maxlength="8">
+                                                    </td>
+                                                </tr>
 
-                                        </table>
-                                        <input type="submit" value="Download" name="op" style="width: 150px; height: 25px; margin-left: 150px; margin-top: 15px;">
-                                        <input type="reset" value="Limpar" style="width: 150px; height: 25px; margin-left: 35px; margin-top: 15px;" >
-                                    </form>
+                                                <tr>
+                                                    <td  style="width: 100px; height: 45px;">
+                                                        <b>Sensor:</b>
+                                                    </td>
+                                                    <td>
+                                                        <select name="sensor" style="width: 250px; height: 25px;">
+                                                            <%
+                                                                out.println("<option value=\"-1\"> Escolha um tipo de sensor </option>");
+                                                                out.println("<option value=\"1\"> 1   - Sensor de Corrente </option>");
+                                                                out.println("<option value=\"2\"> 2   - Sensor de Corrente </option>");
+                                                                out.println("<option value=\"3\"> 3   - Sensor de Corrente </option>");
+                                                                out.println("<option value=\"4\"> 4   - Sensor de Corrente </option>");
+                                                                out.println("<option value=\"5\"> 5   - Sensor de Corrente </option>");
+                                                                out.println("<option value=\"6\"> 6   - Sensor de Tensão </option>");
+                                                                out.println("<option value=\"7\"> 7   - Sensor de Tensão </option>");
+                                                                out.println("<option value=\"8\"> 8   - Sensor de Tensão </option>");
+                                                                out.println("<option value=\"9\"> 9   - Sensor de Tensão </option>");
+                                                                out.println("<option value=\"10\"> 10 - Sensor de Tensão </option>");
+                                                                out.println("<option value=\"11\"> 11 - Sensor de Tensão </option>");
+                                                            %>
+                                                        </select>
+                                                    </td>
+                                                </tr>
 
+                                            </table>
+                                            <input type="submit" value="Download" name="op" style="width: 150px; height: 25px; margin-left: 120px; margin-top: 15px;">
+                                            <input type="reset" value="Limpar" style="width: 150px; height: 25px; margin-left: 35px; margin-top: 15px;" >
+                                        </form>
+
+                                    </div>
                                 </div>
-                            </div>
 
                         </div>
                     </div>

@@ -60,7 +60,7 @@ public class LoginServlet extends HttpServlet {
         String p = request.getParameter("userpass");
 
         try {
-            if (DAO.validate(n, p)) {
+            if (DAO.validaUsuario(n, p)) {
                 session.setAttribute("nome_usuario", n);
                 session.setAttribute("isLogado", true);
                 response.sendRedirect("home.jsp");
@@ -71,7 +71,6 @@ public class LoginServlet extends HttpServlet {
                 rd.forward(request, response);
 
             }
-
         } catch (SQLException ex) {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
