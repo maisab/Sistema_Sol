@@ -236,3 +236,112 @@ ul.alert-dropdown {
     /*float: ;*/
     background: url("../imagens/Logo_solProBrasil_150x150.png") no-repeat;
 }
+
+.perfil-block {
+    margin-top: 150px;
+    width: 420px;
+    padding: 20px;
+    /*background: #F0F8D0;*/
+    border-radius: 5px;
+    /*border-top: 5px solid #228B22;*/
+    margin: 0 auto;
+}
+
+.perfil-block h1 {
+    text-align: center;
+    color: #000;
+    font-size: 18px;
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.perfil-block h3 {
+    text-align: right;
+    color: #000;
+    font-size: 16px;
+}
+
+.perfil-block input {
+    width: 100%;
+    height: 42px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    font-size: 14px;
+    font-family: Montserrat;
+    padding: 0 20px 0 50px;
+    outline: none;
+}
+
+.perfil-block input#username {
+    background: #fff url('http://i.imgur.com/u0XmBmv.png') 20px top no-repeat;
+    background-size: 16px 80px;
+}
+
+.perfil-block input#username:focus {
+    background: #fff url('http://i.imgur.com/u0XmBmv.png') 20px bottom no-repeat;
+    background-size: 16px 80px;
+}
+
+.perfil-block input#password {
+    background: #fff url('http://i.imgur.com/Qf83FTt.png') 20px top no-repeat;
+    background-size: 16px 80px;
+}
+
+.perfil-block input#password:focus {
+    background: #fff url('http://i.imgur.com/Qf83FTt.png') 20px bottom no-repeat;
+    background-size: 16px 80px;
+}
+
+.perfil-block input#passwordC {
+    background: #fff url('http://i.imgur.com/Qf83FTt.png') 20px top no-repeat;
+    background-size: 16px 80px;
+}
+
+.perfil-block input#passwordC:focus {
+    background: #fff url('http://i.imgur.com/Qf83FTt.png') 20px bottom no-repeat;
+    background-size: 16px 80px;
+}
+
+.perfil-block input#useremail {
+    background: #fff url('http://i.imgur.com/u0XmBmv.png') 20px top no-repeat;
+    background-size: 16px 80px;
+}
+
+.perfil-block input#useremail:focus {
+    background: #fff url('http://i.imgur.com/u0XmBmv.png') 20px bottom no-repeat;
+    background-size: 16px 80px;
+}
+
+.perfil-block input:active, .login-block input:focus {
+    border: 1px solid #008000;
+}
+
+.perfil-block input[type=submit] {
+    width: 100%;
+    height: 40px;
+    background: #228B22;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid #228B22;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-family: Montserrat;
+    outline: none;
+    cursor: pointer;
+}
+.perfil-block p{
+    margin-top: 30px;
+    text-align: center;
+    font-size: 16px;
+    font-family: Montserrat;
+
+}
+
+.perfil-block input[type=submit]:hover {
+    background: #B0FF30;
+}

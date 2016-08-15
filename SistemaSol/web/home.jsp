@@ -15,19 +15,14 @@
         <meta name="author" content="">
 
         <title>Sol pro Brasil</title>
-
         <!-- Bootstrap Core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
-
         <!-- Custom CSS -->
         <link href="css/sb-admin.css" rel="stylesheet">
-
         <!-- Morris Charts CSS -->
         <link href="css/plugins/morris.css" rel="stylesheet">
-
         <!-- Custom Fonts -->
         <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
     </head>
     <body>
 
@@ -48,12 +43,11 @@
 
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">
-
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%=session.getAttribute("nome_usuario")%> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="#"><i class="fa fa-fw fa-user"></i> Perfil</a>
+                                <a href="LoginServlet?op=perfil"><i class="fa fa-fw fa-user"></i> Perfil</a>
                             </li>
                             <li class="divider"></li>
                             <li>
@@ -71,15 +65,28 @@
                         <li>
                             <a href="LoginServlet?op=download"><i class="fa fa-fw fa-download"></i> Download</a>
                         </li>
+
+                        <li>
+                            <a href="LoginServlet?op=contato"><i class="fa fa-fw fa-book"></i> Contato</a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-info-circle"></i> Sobre<i class="fa fa-fw fa-caret-down"></i></a>
+                            <ul id="demo" class="collapse">
+                                <li>
+                                    <a href="#">Cris Halmeman</a>
+                                </li>
+                                <li>
+                                    <a href="#">Radames Halmeman</a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
             </nav>
 
             <div id="page-wrapper">
-
                 <div class="container-fluid">
-
                     <!-- Page Heading -->
                     <div class="row">
 

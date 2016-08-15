@@ -4,7 +4,11 @@ import dao.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -14,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Usuario;
 
 /**
  *
@@ -31,14 +36,23 @@ public class LoginServlet extends HttpServlet {
         if (op.equals("cad")) {
             HttpSession session = request.getSession(false);
             response.sendRedirect("cadastro.jsp");
-            return;
 
         } else if (op.equals("download")) {
             HttpSession session = request.getSession(true);
             session.setAttribute("isLogado", true);
             session.setAttribute("listaDownloadVazia", false);
             response.sendRedirect("download.jsp");
-            return;
+
+        } else if (op.equals("contato")) {
+            HttpSession session = request.getSession(true);
+            session.setAttribute("isLogado", true);
+            response.sendRedirect("contato.jsp");
+
+        } else if (op.equals("perfil")) {
+            HttpSession session = request.getSession(true);
+            session.setAttribute("isLogado", true);
+            session.setAttribute("editarPerfil", false);
+            response.sendRedirect("perfil.jsp");
 
         } else if ("sair".equals(op)) {
             HttpSession session = request.getSession(false);
@@ -61,7 +75,10 @@ public class LoginServlet extends HttpServlet {
 
         try {
             if (DAO.validaUsuario(n, p)) {
-                session.setAttribute("nome_usuario", n);
+                Usuario u = DAO.buscaNomeUsuario(n);
+                session.setAttribute("nome_usuario", u.getNome());
+                session.setAttribute("email_usuario", u.getEmail());
+                session.setAttribute("senha_usuario", u.getSenha());
                 session.setAttribute("isLogado", true);
                 response.sendRedirect("home.jsp");
 
@@ -74,6 +91,10 @@ public class LoginServlet extends HttpServlet {
         } catch (SQLException ex) {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
+            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

@@ -21,7 +21,7 @@
                 <h1>Cadastro</h1>
                 <input type="text" value="" name="nome_usuario" placeholder="Nome Completo" id="username" required/>
                 <input type="password" value="" name="senha_usuario" placeholder="Senha" id="password" onchange="formCadastro.passwordC.pattern = this.value;" required/>
-                <input type="password" value="" placeholder="Confirmar Senha" id="passwordC"onchange="this.setCustomValidity(this.validity.patternMismatch ? 'As senhas não conferem' : '')" required/>
+                <input type="password" value="" placeholder="Confirmar Senha" id="passwordC" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'As senhas não conferem' : '')" required/>
                 <input type="email" value="" name="email_usuario" placeholder="Email" id="useremail" required/>
                 <input type="submit" value="Cadastro" name="op"/>
             </form>

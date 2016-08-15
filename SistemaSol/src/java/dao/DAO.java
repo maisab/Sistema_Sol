@@ -24,7 +24,7 @@ public class DAO {
     private static final String userName = "root";
     private static final String password = "546987";
 
-    public static boolean validaUsuario(String name, String pass) throws SQLException, ClassNotFoundException {
+    public static boolean validaUsuario(String name, String pass) {
         boolean status = false;
         Connection conexao = null;
         PreparedStatement pst = null;
@@ -72,7 +72,7 @@ public class DAO {
         return status;
     }
 
-    public static boolean buscaUsuario(String email) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
+    public static boolean verificaUsuario(String email) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
         Connection conexao = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -82,26 +82,44 @@ public class DAO {
         pst = conexao.prepareStatement("select email_usuario from usuario where email_usuario = " + "'" + email + "'");
 
         rs = pst.executeQuery();
-        
-        if(rs != null){
+
+        if (rs != null) {
             return true;
         } else {
             return false;
         }
     }
 
-    public static boolean insereUsuario(Usuario u) throws ClassNotFoundException, InstantiationException {
+    public static Usuario buscaNomeUsuario(String email) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
         Connection conexao = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
-        ArrayList<Usuario> listaUsuarios = listAll();
+
+        Class.forName(driver).newInstance();
+        conexao = DriverManager.getConnection(url + dbName, userName, password);
+        pst = conexao.prepareStatement("select nome_usuario, senha_usuario, email_usuario from usuario where email_usuario = " + "'" + email + "'");
+
+        rs = pst.executeQuery();
+        String aux = "";
+        Usuario u = new Usuario();
+        while (rs.next()) {
+            u.setNome(rs.getString("nome_usuario"));
+            u.setSenha(rs.getString("senha_usuario"));
+            u.setEmail(rs.getString("email_usuario"));
+        }
+        return u;
+    }
+
+    public static boolean insereUsuario(Usuario u) {
+        Connection conexao = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
 
         try {
             Class.forName(driver).newInstance();
             conexao = DriverManager.getConnection(url + dbName, userName, password);
             Statement statement = conexao.createStatement();
             String sql = "INSERT INTO usuario (nome_usuario, email_usuario, senha_usuario) VALUES ('" + u.getNome() + "','" + u.getEmail() + "','" + u.getSenha() + "')";
-            System.out.println("Executando consulta: " + sql);
 
             statement.execute(sql);
             statement.close();
@@ -162,35 +180,47 @@ public class DAO {
 
     }
 
-    public static ArrayList<Usuario> listAll() {
+    public static boolean gravaLogUsuario(String data, String dados, String email) {
         Connection conexao = null;
         PreparedStatement pst = null;
-        ArrayList<Usuario> usuarios = new ArrayList<>();
+        ResultSet rs = null;
+        ArrayList<Usuario> listaUsuarios = new ArrayList<>();
 
         try {
             Class.forName(driver).newInstance();
             conexao = DriverManager.getConnection(url + dbName, userName, password);
-            PreparedStatement stmt = conexao.prepareStatement("select * from usuario");
+            Statement statement = conexao.createStatement();
+            String sql = "INSERT INTO logs_usuario (datahora_log_usuario, ocorrencia_log_usuario, email_usuario) VALUES ('" + data + "','" + dados + "','" + email + "')";
 
-// executa um select
-            ResultSet rs = stmt.executeQuery();
-
-// itera no ResultSet
-            while (rs.next()) {
-                Usuario u = new Usuario();
-                u.setNome(rs.getString("usuario"));
-                u.setEmail(rs.getString("email"));
-                u.setSenha(rs.getString("senha"));
-
-                System.out.println(u.toString());
-                usuarios.add(u);
-            }
-            stmt.close();
-            conexao.close();
+            statement.execute(sql);
+            statement.close();
+            return true;
 
         } catch (Exception ex) {
             System.out.println("Erro : " + ex.getMessage());
+            return false;
         }
-        return usuarios;
     }
+
+    public static boolean atualizarUsuario(String nome, String senha, String email) {
+        Connection conexao = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+
+        try {
+            Class.forName(driver).newInstance();
+            conexao = DriverManager.getConnection(url + dbName, userName, password);
+            try (Statement statement = conexao.createStatement()) {
+                String sql = "UPDATE usuario SET nome_usuario='" + nome + "', senha_usuario='" + senha + "' where email_usuario = '" + email + "'";
+
+                statement.execute(sql);
+            }
+            return true;
+
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
+            System.out.println("Erro : " + ex.getMessage());
+            return false;
+        }
+    }
+
 }

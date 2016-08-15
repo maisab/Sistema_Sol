@@ -1,4 +1,3 @@
-<%@page import="model.Usuario"%>
 <%@page import="dao.DAO"%>
 <%@page import="java.util.List"%>
 <%
@@ -17,7 +16,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Perfil do Usuário</title>
+        <title>Contato</title>
         <!-- Bootstrap Core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <!-- Custom CSS -->
@@ -38,15 +37,15 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Perfil do usuário</a>
+                    <a class="navbar-brand" href="#">Download Dados</a>
                 </div>
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%=session.getAttribute("nome_usuario")%> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li class="active">
-                                <a href="#"><i class="fa fa-fw fa-user"></i>Perfil</a>
+                            <li>
+                                <a href="LoginServlet?op=perfil"><i class="fa fa-fw fa-user"></i> Perfil</a>
                             </li>
                             <li class="divider"></li>
                             <li>
@@ -64,11 +63,20 @@
                         <li>
                             <a href="LoginServlet?op=download"><i class="fa fa-fw fa-download"></i> Download</a>
                         </li>
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-info"></i> Sobre o projeto</a>
+                        <li class="active">
+                            <a href="#"><i class="fa fa-fw fa-book"></i> Contato</a>
                         </li>
+
                         <li>
-                            <a href="LoginServlet?op=contato"><i class="fa fa-fw fa-book"></i> Contato</a>
+                            <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-info-circle"></i> Sobre <i class="fa fa-fw fa-caret-down"></i></a>
+                            <ul id="demo" class="collapse">
+                                <li>
+                                    <a href="#">Cris Halmeman</a>
+                                </li>
+                                <li>
+                                    <a href="#">Radames Halmeman</a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
@@ -84,73 +92,51 @@
                         <div class="col-lg-12">
 
                             <h2 class="page-header">
-                                Perfil <small>Usuário</small>
+                                Contato <small>Professores</small>
                             </h2>
                             <ol class="breadcrumb">
                                 <li class="active">
-                                    <i class="fa fa-user"></i> Perfil
+                                    <i class="fa fa-book"></i> Contato
                                 </li>
                             </ol>
-                            <div class="perfil-block">
 
-                                <%
-                                    String nome = (String) session.getAttribute("nome_usuario");
-                                    String senha = (String) session.getAttribute("senha_usuario");
-                                    String email = (String) session.getAttribute("email_usuario");
-                                    if (!(Boolean) session.getAttribute("editarPerfil")) {
+                            <div id="tabela"style="margin-left: 170px; margin-top: 20px;">
+                                <table style="margin-top: 10px; ">
+                                    <tr>
+                                        <td  style="width: 380px; ">
+                                            <img src="imagens/cris01.jpeg"/>
+                                        </td>
 
-                                %>
-                                <form>
-                                    <b>Nome: </b> 
-                                    <b style="color: red">*</b>
-                                    <br/> 
-                                    <%                                        
-                                        out.println("<input type=\"text\" name=\"nome_usuario\" value=\"" + nome + "\" disabled/>");
-                                    %> 
+                                        <td  style="margin-left:50px;">
+                                            <img src="imagens/rdms01.jpeg"/>
+                                        </td>
+                                    </tr>
 
-                                    <b>Senha: </b>
-                                    <b style="color: red">*</b>
-                                    <br/> 
-                                    <%
-                                        out.println("<input type=\"password\" name=\"senha_usuario\" value=\"" + senha + "\" disabled/>");
-                                    %> 
+                                    <tr>
+                                        <td>
+                                            <br/>
+                                    <center><b>cristhalmeman@gmail.com</b></center>
+                                    </td>
 
-                                    <b>Email: </b>
-                                    <b style="color: red">*</b>
-                                    <br/> 
-                                    <%
-                                        out.println("<input type=\"email\" name=\"email_usuario\" value=\"" + email + "\" disabled/>");
-                                    %>
-                                    <h3><a href="PerfilServlet?op=editarP">Editar Perfil</a></h3>
-                                </form>
+                                    <td>
+                                        <br/>
+                                    <center><b>radames@utfpr.edu.br</b></center>
+                                    </td>
 
-                                <% } else {%>
-                                <form action="PerfilServlet" id="formCadastro" method="POST">
-                                    <b>Nome: </b> 
-                                    <b style="color: red">*</b>
-                                    <br/> 
-                                    <%
-                                        out.println("<input type=\"text\" name=\"nome_usuario\" value=\"" + nome + "\"/>");
-                                    %> 
-
-                                    <b>Senha: </b> 
-                                    <b style="color: red">*</b>
-                                    <br/> 
-                                    <%
-                                        out.println("<input type=\"text\" name=\"senha_usuario\"  id=\"senha\" value=\"" + senha + "\"/>");
-                                    %> 
-
-                                    <b>Email: </b> 
-                                    <b style="color: red">*</b>
-                                    <br/> 
-                                    <%
-                                        out.println("<input type=\"email\" name=\"email_usuario\" value=\"" + email + "\" readonly/>");
-                                    %>
-                                    <input type="submit" value="Editar Perfil" name="op" />
-                                </form>
-
-                                <%}%>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <br/>
+                                    <center><b><a href="ContatoServlet?op=cris">Clique para mais informações</a></b></center>
+                                    </td>
+                                    <td>
+                                        <br/>
+                                    <center><b><a href="ContatoServlet?op=radames">Clique para mais informações</a></b></center>
+                                    </td>
+                                    </tr>
+                                </table>
                             </div>
+
                         </div>
                     </div>
                     <!-- /.row -->

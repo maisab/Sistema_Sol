@@ -10,8 +10,12 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
@@ -56,19 +60,17 @@ public class DownloadServlet extends HttpServlet {
                     session.setAttribute("isLogado", true);
                     session.setAttribute("listaDownloadVazia", false);
 
+                    String dataHoraAtual = horaAtual();
+                    String email_usuario = (String) session.getAttribute("email_usuario");
+
+                    String ocorrencia = "Download coleta_dados data_inicial: " + dtInicial + " data_final: " + dtFinal + " sensor: " + sensor;
+
+                    DAO.gravaLogUsuario(dataHoraAtual, ocorrencia, email_usuario);
                     List<String> lista = DAO.buscaSensor(dtInicial, dtFinal, sensor);
-//                    File arquivo = new File("/SistemaSol/web/arquivo.csv");
-//                    File arquivo = new File(getClass().getResource("web/arquivo.txt").toString());
-//                    ServletContext app = (servlet).getServletContext();
+
                     ServletContext servletContext = getServletContext();
                     File tmpDir = (File) servletContext.getAttribute("javax.servlet.context.tempdir");
                     File arquivo = new File(tmpDir, "arquivo.csv");
-
-//                    if (arquivo.exists()) {
-//                        arquivo.delete();
-//                        System.out.println("ENtrou no existe");
-//                    }
-//                    arquivo.createNewFile();
 
                     FileWriter fw = new FileWriter(arquivo, false);
                     BufferedWriter bw = new BufferedWriter(fw);
@@ -121,5 +123,23 @@ public class DownloadServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    public static String horaAtual() {
+        StringBuilder sb = new StringBuilder();
+        GregorianCalendar gc = new GregorianCalendar(TimeZone.getTimeZone("GMT+00:00"));
+        sb.append(gc.get(GregorianCalendar.HOUR_OF_DAY));
+        sb.append(":");
+        sb.append(gc.get(GregorianCalendar.MINUTE));
+        sb.append(":");
+        sb.append(gc.get(GregorianCalendar.SECOND));
+
+        String hora = sb.toString();
+
+        SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
+        Date dataAtual = new Date(System.currentTimeMillis());
+        String data = sd.format(dataAtual);
+
+        return data + " " + hora;
+    }
 
 }

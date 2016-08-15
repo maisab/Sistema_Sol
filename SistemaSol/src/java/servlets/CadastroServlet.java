@@ -42,16 +42,11 @@ public class CadastroServlet extends HttpServlet {
         u.setSenha(senha);
 
         try {
-            if (!DAO.buscaUsuario(email)) {
-                try {
-                    DAO.insereUsuario(u);
-                    request.setAttribute("mensagemCadastrado", "Usuário cadastrado com sucesso!");
-                    RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
-                    rd.forward(request, response);
-
-                } catch (ClassNotFoundException | InstantiationException ex) {
-                    Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
-                }
+            if (!DAO.verificaUsuario(email)) {
+                DAO.insereUsuario(u);
+                request.setAttribute("mensagemCadastrado", "Usuário cadastrado com sucesso!");
+                RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+                rd.forward(request, response);
 
             } else {
                 request.setAttribute("erroCadastro", "Email já cadastrado: " + email);
